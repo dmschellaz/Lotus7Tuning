@@ -1,0 +1,13 @@
+GC Name: D:\HOLLEY\FW0103\Saved GCF\062726_IACadjust.sniper
+Software Version: 2.0 Build 15
+Save Date: Saturday, June 27, 2026
+Save Time: 11:53:22
+Global ICF Version: 2
+Fuel ICF Version: 2
+Spark ICF Version: 2
+System ICF Version: 2
+Idle ICF Version: 2
+Sensor ICF Version: 2
+Nitrous ICF Version: 2
+Boost ICF Version: 2
+Advanced ICF Version: 2
