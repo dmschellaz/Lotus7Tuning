@@ -1,0 +1,8 @@
+log_id,segment,file,start_sec,end_sec,duration_sec,cts_start_f,cts_end_f,rpm_peak,rpm_end20_avg,iac_end20_avg_pct,afr_end20_avg,target_afr_end20_avg
+1,1,001-initial-cold-start-dies.csv,12.402,31.23,18.828,89.2,89.1,1023.0,788.0,100.0,15.99,12.57
+2,1,002-header-gasket-cl-off-idle-screw-1turn.csv,31.86,136.998,105.138,95.6,102.4,1221.0,1085.0,55.0,14.19,12.85
+3,1,003-cl-off-full-warmup-tps-reset.csv,4.662,359.388,354.726,118.2,212.6,2002.0,1139.0,0.0,12.86,13.5
+4,1,004-iac-tuning-idle-screw-adjusted-hot-flare.csv,6.426,115.722,109.296,184.9,209.8,3071.0,980.0,6.1,13.2,13.5
+5,1,005-hot-start-iac-35pct-short-cool-log.csv,8.17,26.448,18.278,124.7,124.6,1144.0,1021.0,100.0,18.72,13.25
+6,1,006-full-warmup-hot-restart-after-iac-startup.csv,12.03,398.964,386.934,124.4,197.3,1137.0,995.0,18.5,13.34,13.5
+6,2,006-full-warmup-hot-restart-after-iac-startup.csv,405.824,429.478,23.654,197.2,201.2,1146.0,1056.0,27.7,13.31,13.5
