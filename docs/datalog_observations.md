@@ -1,6 +1,6 @@
 # Datalog observations
 
-These notes summarize the six logs captured during the Sniper idle/startup tuning sequence.
+These notes summarize the logs captured during the Sniper idle/startup tuning sequence.
 
 ## Summary metrics
 
@@ -12,6 +12,7 @@ These notes summarize the six logs captured during the Sniper idle/startup tunin
 |        4 | 004-iac-tuning-idle-screw-adjusted-hot-flare.csv  |        115.722 |              1 |           184.4 |           209.8 |               3071 |                 6.1 |             980 |           13.2  |                  13.5  |                 0 |               0 |
 |        5 | 005-hot-start-iac-35pct-short-cool-log.csv        |         26.448 |              1 |           124.6 |           124.8 |               1144 |               100   |            1021 |           18.72 |                  13.25 |                 0 |               0 |
 |        6 | 006-full-warmup-hot-restart-after-iac-startup.csv |        429.478 |              2 |           124.3 |           201.3 |               1146 |                27.7 |            1056 |           13.31 |                  13.5  |                 0 |               0 |
+|        7 | 007-full-warmup-vacuum-bleed-coolant-dead-cylinder.csv |        429.5 |              2 |           124.3 |           201.3 |               1093 |                19.5 |            1010 |           13.33 |                  13.5  |                 0 |               0 |
 
 ## Per-log observations
 
@@ -73,6 +74,22 @@ File: `logs/raw/006-full-warmup-hot-restart-after-iac-startup.csv`
 - Hot restart is now fixed: peak RPM is only about 1,146 rpm instead of ~3,071 rpm.
 - End-of-log hot IAC is around 20%, slightly higher than ideal but acceptable for now while the tune is stabilizing.
 - Conclusion: leave hot-start IAC settings alone; consider a small coolant enrichment bump around 120-135°F.
+
+### 007 — Full warmup after vacuum/coolant bleed; dead cylinder identified
+
+File: `logs/raw/007-full-warmup-vacuum-bleed-coolant-dead-cylinder.csv`
+
+Date: 2026-06-27
+
+- Coolant system vacuum-bled before this session to address rapid overheating. Result: normal warm-up rate confirmed (124°F → 201°F over 7.2 min, no spike).
+- Engine required manual throttle blips to stay alive in the first ~60 seconds, consistent with a misfiring cylinder.
+- IAC stepped down correctly through the heat cycle: ~71% at 120-140°F, ~21% at 160-180°F, ~19% at 200°F+. Idle held 1015-1019 RPM throughout — IAC curve is working.
+- Hot restart (engine off at 197°F, restarted 6 seconds later): fired immediately, RPM held at ~1080, AFR within 0.2 of target by +5 seconds, IAC decayed from 44% → 20% smoothly. Hot start is confirmed fixed.
+- Coolant enrichment tapered correctly: +4.6% at 120-140°F, +1.7% at 140-160°F, neutral above 160°F.
+- Entire log is 100% open loop — closed loop never enabled. AFR mean error +0.95 lean, worst spike +6.7 AFR lean. With CL off there is no correction; lean spikes go uncorrected.
+- MAP at idle: 76.5 kPa avg (~7.3 inHg vacuum). Low vacuum consistent with aggressive cam overlap.
+- **Dead cylinder identified via thermal camera**: one passenger-side header tube reads ~85.6°F (ambient) while all others are pegged over camera max range. A cold tube = no combustion in that cylinder. This directly explains the lean spikes in the AFR (unburned air passing the O2 sensor), the stumble/blip-to-survive at initial startup, and the rough idle character.
+- Conclusion: do not change any EFI settings until the dead cylinder is diagnosed. Suspect fouled spark plug first (rich cold-start enrichment history), then spark wire/coil, then injector, then compression.
 
 ## Temperature-bin summary
 
