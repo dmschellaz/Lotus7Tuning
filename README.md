@@ -27,15 +27,31 @@ docs/                    Tuning notes, observations, settings history, next step
 scripts/                 Helper script to regenerate summary CSVs
 ```
 
-## Current working conclusions
+## Current status — 2026-06-27
 
-1. The original no-stay-running problem improved dramatically after header work, disabling closed loop, and opening the throttle blades.
-2. After the idle screw was adjusted and TPS reset, hot idle was brought into a much better range.
-3. A hot restart flare to ~3,071 rpm was caused by IAC Startup settings, not by the idle screw.
-4. The revised hot IAC Startup settings worked: hot restart peak dropped to ~1,146 rpm.
-5. Remaining issue is mainly warmup behavior around 120-135°F, where AFR looks lean and IAC is high, but the engine improves as it warms.
-6. Because of the loppy cam and prior header leaks, AFR at idle should be treated as a tuning clue, not absolute truth.
+**Blocked on mechanical: dead cylinder identified. Do not change EFI settings until resolved.**
 
-## Latest suggested next step
+Thermal camera inspection showed one passenger-side header tube running at ambient temperature (~85°F) while all others were pegged hot. That means one cylinder is not contributing combustion at all. This explains the lean AFR spikes (up to +6.7 AFR), the rough idle, and the need to blip the throttle to keep it alive during warm-up.
 
-Leave the hot-start IAC settings alone. Consider adding only a small coolant enrichment bump of +3% to +5% around 120-135°F, then re-log a full warmup. Reintroduce closed loop carefully only after idle and exhaust sealing are stable.
+## What has been solved
+
+| Issue | Status |
+|---|---|
+| Engine wouldn't stay running | Fixed — header work + idle screw + TPS reset |
+| Hot restart RPM flare to 3,071 rpm | Fixed — IAC startup position set to 35%, hold 1s, decay 3s |
+| Rapid overheating | Fixed — coolant system vacuum-bled 2026-06-27 |
+| Hot restart behavior | Confirmed good — fires immediately, stable RPM, AFR on target within 5s |
+| IAC warmup curve | Working — steps down correctly 71% → 19% as temps rise 120°F → 200°F |
+
+## Current known issues
+
+1. **Dead cylinder** — one header tube cold on thermal camera. Likely a fouled spark plug from repeated cold-start rich enrichment. Diagnose in order: plug → wire/coil → injector → compression test.
+2. **Closed loop still off** — AFR corrections are static. Mean AFR runs +0.95 lean at idle with CL disabled. Do not enable CL until the dead cylinder is fixed or CL will chase a phantom lean signal.
+3. **Hot IAC slightly high** — settling around 19-20% above 160°F vs the 2-10% textbook target. Acceptable for now; recheck after CL is running.
+
+## Immediate next step
+
+1. Pull all four spark plugs, compare condition — the dead cylinder's plug will likely be fouled black/wet.
+2. Replace bad plug(s), re-run a full warmup log, confirm all four header tubes heat evenly on thermal camera.
+3. Once cylinder is confirmed healthy, enable closed loop above 160°F and log the AFR correction behavior.
+4. Do not adjust base fuel, coolant enrichment, or IAC settings until after step 2 is complete.
