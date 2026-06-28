@@ -1,21 +1,28 @@
 # Next steps checklist
 
-## IMMEDIATE — Mechanical repairs required before any EFI tuning (as of 2026-06-27)
+## IMMEDIATE — Cold idle enrichment (as of 2026-06-28)
 
-Plugs pulled and inspected 2026-06-27. See `docs/inspections/2026-06-27_visual_inspection.md` for full notes and photos.
+Mechanical repairs complete (log 008, 2026-06-28). New plugs installed, exhaust leaks fixed on no-gauge side. Engine confirmed mechanically healthy when warm — zero misfire events above 160°F, AFR within +0.06 of target. Hot restart IAC working correctly.
 
-### What was found
+**One remaining issue: cold idle runs lean from 90–130°F.**
 
-- **Fuel gauge side** — plugs tan/normal. That side's repaired exhaust flanges are working. No action needed.
-- **No gauge side** — all four plugs dark/fouled. The 2nd-from-left plug (cold header tube cylinder) is the worst. The two middle plugs are also heavily fouled, consistent with exhaust flange leaks on those cylinders.
+The coolant enrichment table does not add enough fuel when the engine is cold. The engine stalls on first start attempt and needs driver throttle blips to survive until ~130°F.
 
-### Fix sequence (do not skip steps or reorder)
+### AFR deficit at cold temps (from log 008)
 
-1. **Replace all four plugs on the no-gauge side** with fresh plugs of correct heat range. Do not reinstall the fouled ones.
-2. **Fix exhaust flange leaks on the no-gauge side** — same repair already completed on the fuel-gauge side center two cylinders. The two middle cylinders on this side are the primary suspects.
-3. **Reinstall fresh plugs only after flanges are sealed** — new plugs into leaking flanges will re-foul immediately.
-4. **Re-run full warmup log** and recheck with thermal camera. All four header tubes on both sides should heat evenly.
-5. **Enable closed loop** only after step 4 confirms all cylinders firing cleanly.
+| Temp | AFR error | Action needed |
+|---|---|---|
+| 80–100°F | ~+3 to +4 lean | Large enrichment increase needed |
+| 100–120°F | +2.39 lean | Large increase needed |
+| 120–140°F | +1.28 lean | Moderate increase needed |
+| 140–160°F | +0.53 lean | Small increase or leave for CL |
+| 160°F+ | +0.06 lean | Leave alone — working perfectly |
+
+### What to change
+
+In the Holley Sniper software, increase **Coolant Enrichment** at the 80°F, 90°F, 100°F, 110°F, and 120°F cells. Start with +15% at 80°F tapering to +5% at 120°F, then re-log a cold start from below 100°F.
+
+Do not touch anything above 140°F — that range is calibrated correctly.
 
 ## After dead cylinder is fixed
 

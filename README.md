@@ -45,14 +45,18 @@ Thermal camera inspection showed one passenger-side header tube running at ambie
 
 ## Current known issues
 
-1. **No-gauge side needs mechanical work** — plugs pulled 2026-06-27 and inspected. All four plugs on this side are fouled (dark/black). The 2nd-from-left plug (cold header tube cylinder) is the worst. Two middle cylinders suspected to have exhaust flange leaks matching the prior issue on the fuel-gauge side. See `docs/inspections/2026-06-27_visual_inspection.md`.
-2. **Closed loop still off** — do not enable until mechanical repairs are complete and all cylinders confirmed firing on thermal camera.
-3. **AFR data not trustworthy yet** — lean bias (+0.95 mean, spikes to +6.7) is a combination of the dead cylinder and exhaust leak air reaching the O2 sensor. Not a calibration issue.
+1. **Cold idle runs lean (80–130°F)** — engine stalls on first cold start attempt and needs throttle blips to survive until ~130°F. Coolant enrichment table needs +15% at 80°F tapering to +5% at 120°F. Above 140°F the engine is calibrated correctly and runs well.
+2. **Closed loop still off** — enable after cold enrichment is fixed and a clean cold start log is confirmed.
+
+## What was fixed (2026-06-28)
+
+- Replaced all four spark plugs on the no-gauge side
+- Fixed exhaust flange leaks on the no-gauge side
+- **Result**: zero misfire events when warm, AFR +0.06 of target at 160°F+, hot restart clean at ~1,080 RPM
 
 ## Immediate next step
 
-1. Replace all four plugs on the no-gauge side with fresh plugs.
-2. Fix exhaust flange leaks on the no-gauge side (same repair done on fuel-gauge side center two cylinders).
-3. Reinstall plugs only after flanges are sealed.
-4. Re-run full warmup log + thermal camera check — all 8 header tubes should be hot.
-5. Enable closed loop and begin AFR-based tuning.
+1. Increase coolant enrichment in the Holley Sniper software at 80–120°F cells (+15% at 80°F, taper to +5% at 120°F as a starting point).
+2. Cold start from below 100°F and log a full warmup — engine should hold idle without throttle blips.
+3. Enable closed loop once cold start is clean.
+4. Do not touch IAC, idle screw, or any settings above 140°F — those are working correctly.

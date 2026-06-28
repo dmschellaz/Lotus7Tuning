@@ -13,6 +13,7 @@ These notes summarize the logs captured during the Sniper idle/startup tuning se
 |        5 | 005-hot-start-iac-35pct-short-cool-log.csv        |         26.448 |              1 |           124.6 |           124.8 |               1144 |               100   |            1021 |           18.72 |                  13.25 |                 0 |               0 |
 |        6 | 006-full-warmup-hot-restart-after-iac-startup.csv |        429.478 |              2 |           124.3 |           201.3 |               1146 |                27.7 |            1056 |           13.31 |                  13.5  |                 0 |               0 |
 |        7 | 007-full-warmup-vacuum-bleed-coolant-dead-cylinder.csv |        429.5 |              2 |           124.3 |           201.3 |               1093 |                19.5 |            1010 |           13.33 |                  13.5  |                 0 |               0 |
+|        8 | 008-cold-warmup-new-plugs-fixed-exhaust-leaks.csv      |        826.2 |              3 |            90.3 |           189.0 |               3555 |                21.0 |            1001 |           13.07 |                  13.5  |                 0 |               0 |
 
 ## Per-log observations
 
@@ -90,6 +91,22 @@ Date: 2026-06-27
 - MAP at idle: 76.5 kPa avg (~7.3 inHg vacuum). Low vacuum consistent with aggressive cam overlap.
 - **Dead cylinder identified via thermal camera**: one passenger-side header tube reads ~85.6°F (ambient) while all others are pegged over camera max range. A cold tube = no combustion in that cylinder. This directly explains the lean spikes in the AFR (unburned air passing the O2 sensor), the stumble/blip-to-survive at initial startup, and the rough idle character.
 - Conclusion: do not change any EFI settings until the dead cylinder is diagnosed. Suspect fouled spark plug first (rich cold-start enrichment history), then spark wire/coil, then injector, then compression.
+
+### 008 — Cold warmup from 90°F, new spark plugs, fixed exhaust leaks (2026-06-28)
+
+File: `logs/raw/008-cold-warmup-new-plugs-fixed-exhaust-leaks.csv`
+
+- First cold start from 90°F after replacing all four no-gauge-side spark plugs and fixing the exhaust flange leaks on that side.
+- Engine stalled on first attempt after 8 seconds. Second attempt held. Driver had to blip throttle during initial cold idle to keep it alive — confirmed in TPS data (multiple revs to 9–28% TPS at t=46–55s).
+- **Dead cylinder confirmed fixed**: at 160–180°F, RPM stdev=20.6 (vs 19.9 in log007), AFR mean error=+0.059, zero correlated misfire events. No rhythmic RPM dip pattern. Engine is mechanically healthy when warm.
+- **No IAC flare on hot restart**: hot restart at 183°F settled cleanly to 980–1,093 RPM with TPS at 0.3%. All high-RPM events in that window (including 3,555 RPM peak) were driver revs confirmed by TPS (40–65%). RPM spikes at TPS<2% were engine coasting down after revs, not IAC-driven flares.
+- **Cold idle lean condition identified as sole remaining issue**: engine runs 2–4 AFR lean from 90–130°F. Coolant enrichment adding +11.7% at 80–100°F is insufficient. AFR error by temp band:
+  - 100–120°F: +2.39 lean, 48.5% of time >+2 lean
+  - 120–140°F: +1.28 lean, 4.8% of time >+2 lean
+  - 140–160°F: +0.53 lean, 0% >+2 lean
+  - 160–180°F: +0.06 lean, 0% >+2 lean (effectively perfect)
+- RPM roughness at cold temps is caused entirely by the lean condition — random misfire pattern, not rhythmic single-cylinder pattern.
+- Conclusion: increase coolant enrichment at 80–130°F significantly. Engine is mechanically good; this is a calibration-only fix.
 
 ## Temperature-bin summary
 
