@@ -1,17 +1,21 @@
 # Next steps checklist
 
-## IMMEDIATE — Dead cylinder (as of 2026-06-27)
+## IMMEDIATE — Mechanical repairs required before any EFI tuning (as of 2026-06-27)
 
-One header tube running at ambient temperature (~85.6°F on thermal camera vs all others pegged over max). Diagnose and fix before any further EFI tuning — lean AFR readings and rough idle will not be trustworthy until all four cylinders fire.
+Plugs pulled and inspected 2026-06-27. See `docs/inspections/2026-06-27_visual_inspection.md` for full notes and photos.
 
-Diagnose in this order:
+### What was found
 
-1. **Pull all four spark plugs** — compare condition. One will likely be black/wet (fouled from rich enrichment during cold starts). Replace fouled plug(s) with fresh plugs of correct heat range.
-2. **Swap spark plug wire/coil** on the suspect cylinder with a known-good one — if the cold tube moves to a different cylinder, the wire/coil is the problem.
-3. **Check injector** — with engine running, use a mechanic's stethoscope or long screwdriver to ear on each injector. Should hear rapid clicking. Silent injector = not firing.
-4. **Compression test** — if spark and fuel are OK, do a wet/dry compression test. Low compression = mechanical issue (valve, ring).
+- **Fuel gauge side** — plugs tan/normal. That side's repaired exhaust flanges are working. No action needed.
+- **No gauge side** — all four plugs dark/fouled. The 2nd-from-left plug (cold header tube cylinder) is the worst. The two middle plugs are also heavily fouled, consistent with exhaust flange leaks on those cylinders.
 
-The cold tube is on the passenger side. Identify which cylinder number it corresponds to before pulling plugs.
+### Fix sequence (do not skip steps or reorder)
+
+1. **Replace all four plugs on the no-gauge side** with fresh plugs of correct heat range. Do not reinstall the fouled ones.
+2. **Fix exhaust flange leaks on the no-gauge side** — same repair already completed on the fuel-gauge side center two cylinders. The two middle cylinders on this side are the primary suspects.
+3. **Reinstall fresh plugs only after flanges are sealed** — new plugs into leaking flanges will re-foul immediately.
+4. **Re-run full warmup log** and recheck with thermal camera. All four header tubes on both sides should heat evenly.
+5. **Enable closed loop** only after step 4 confirms all cylinders firing cleanly.
 
 ## After dead cylinder is fixed
 

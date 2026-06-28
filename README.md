@@ -45,13 +45,14 @@ Thermal camera inspection showed one passenger-side header tube running at ambie
 
 ## Current known issues
 
-1. **Dead cylinder** — one header tube cold on thermal camera. Likely a fouled spark plug from repeated cold-start rich enrichment. Diagnose in order: plug → wire/coil → injector → compression test.
-2. **Closed loop still off** — AFR corrections are static. Mean AFR runs +0.95 lean at idle with CL disabled. Do not enable CL until the dead cylinder is fixed or CL will chase a phantom lean signal.
-3. **Hot IAC slightly high** — settling around 19-20% above 160°F vs the 2-10% textbook target. Acceptable for now; recheck after CL is running.
+1. **No-gauge side needs mechanical work** — plugs pulled 2026-06-27 and inspected. All four plugs on this side are fouled (dark/black). The 2nd-from-left plug (cold header tube cylinder) is the worst. Two middle cylinders suspected to have exhaust flange leaks matching the prior issue on the fuel-gauge side. See `docs/inspections/2026-06-27_visual_inspection.md`.
+2. **Closed loop still off** — do not enable until mechanical repairs are complete and all cylinders confirmed firing on thermal camera.
+3. **AFR data not trustworthy yet** — lean bias (+0.95 mean, spikes to +6.7) is a combination of the dead cylinder and exhaust leak air reaching the O2 sensor. Not a calibration issue.
 
 ## Immediate next step
 
-1. Pull all four spark plugs, compare condition — the dead cylinder's plug will likely be fouled black/wet.
-2. Replace bad plug(s), re-run a full warmup log, confirm all four header tubes heat evenly on thermal camera.
-3. Once cylinder is confirmed healthy, enable closed loop above 160°F and log the AFR correction behavior.
-4. Do not adjust base fuel, coolant enrichment, or IAC settings until after step 2 is complete.
+1. Replace all four plugs on the no-gauge side with fresh plugs.
+2. Fix exhaust flange leaks on the no-gauge side (same repair done on fuel-gauge side center two cylinders).
+3. Reinstall plugs only after flanges are sealed.
+4. Re-run full warmup log + thermal camera check — all 8 header tubes should be hot.
+5. Enable closed loop and begin AFR-based tuning.
