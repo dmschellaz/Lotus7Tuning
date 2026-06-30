@@ -27,11 +27,11 @@ docs/                    Tuning notes, observations, settings history, next step
 scripts/                 Helper script to regenerate summary CSVs
 ```
 
-## Current status — 2026-06-27
+## Current status — 2026-06-29
 
-**Blocked on mechanical: dead cylinder identified. Do not change EFI settings until resolved.**
+**Cold start is working. Fine-tuning and closed loop enablement are next.**
 
-Thermal camera inspection showed one passenger-side header tube running at ambient temperature (~85°F) while all others were pegged hot. That means one cylinder is not contributing combustion at all. This explains the lean AFR spikes (up to +6.7 AFR), the rough idle, and the need to blip the throttle to keep it alive during warm-up.
+First successful unassisted cold start confirmed in log 010 (2026-06-29): engine ran from 95°F to 161°F without stalling and without any throttle input. AFR mean error +0.91 lean open-loop; +0.03 lean at 160°F+. The engine is in good shape. Battery voltage dropped to 7.86V during cranking and needs attention before the next session.
 
 ## What has been solved
 
@@ -41,22 +41,19 @@ Thermal camera inspection showed one passenger-side header tube running at ambie
 | Hot restart RPM flare to 3,071 rpm | Fixed — IAC startup position set to 35%, hold 1s, decay 3s |
 | Rapid overheating | Fixed — coolant system vacuum-bled 2026-06-27 |
 | Hot restart behavior | Confirmed good — fires immediately, stable RPM, AFR on target within 5s |
-| IAC warmup curve | Working — steps down correctly 71% → 19% as temps rise 120°F → 200°F |
+| IAC warmup curve | Working — steps down correctly from 100% cold to ~25% at 160°F |
+| Dead cylinder (passenger side) | Fixed 2026-06-28 — new plugs + exhaust flange repair, zero misfire warm |
+| Cold idle stall (80–130°F) | Fixed 2026-06-29 — coolant enrichment increased to 155%/145%/125% at 80/100/120°F |
 
 ## Current known issues
 
-1. **Cold idle runs lean (80–130°F)** — engine stalls on first cold start attempt and needs throttle blips to survive until ~130°F. Coolant enrichment table needs +15% at 80°F tapering to +5% at 120°F. Above 140°F the engine is calibrated correctly and runs well.
-2. **Closed loop still off** — enable after cold enrichment is fixed and a clean cold start log is confirmed.
+1. **Battery voltage low during cranking** — dropped to 7.86V in log 010. Check battery health, charge fully, and load test before next session. Low cranking voltage starves injector solenoids and may be contributing to the remaining cold lean condition.
+2. **Cold zone still slightly lean (95–120°F)** — AFR runs +1.0 to +1.8 lean in this range open-loop. A small additional enrichment increase (80°F→160%, 100°F→150%) may help after battery is confirmed healthy.
+3. **Closed loop still off** — hot zone is calibrated (+0.03 at 160°F+). Enable CL above 140°F once battery is confirmed good; it will self-correct the remaining lean offset in the 130–145°F zone.
 
-## What was fixed (2026-06-28)
+## Immediate next steps
 
-- Replaced all four spark plugs on the no-gauge side
-- Fixed exhaust flange leaks on the no-gauge side
-- **Result**: zero misfire events when warm, AFR +0.06 of target at 160°F+, hot restart clean at ~1,080 RPM
-
-## Immediate next step
-
-1. Increase coolant enrichment in the Holley Sniper software at 80–120°F cells (+15% at 80°F, taper to +5% at 120°F as a starting point).
-2. Cold start from below 100°F and log a full warmup — engine should hold idle without throttle blips.
-3. Enable closed loop once cold start is clean.
-4. Do not touch IAC, idle screw, or any settings above 140°F — those are working correctly.
+1. **Fix the battery first** — charge fully and load test. Do not tune against a weak battery.
+2. **Enable closed loop above 140°F** — the hot zone is dialed in; CL will handle residual lean offset without further table changes.
+3. **Optional enrichment fine-tune** — if 95–120°F zone still runs lean after CL is on, increase 80°F→160%, 100°F→150%.
+4. Do not touch IAC, idle screw, or any coolant enrichment cells above 140°F — those are working correctly.

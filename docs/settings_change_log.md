@@ -60,19 +60,46 @@ Observed result:
 - Hot restart no longer flares violently.
 - In the full warmup/hot-restart log, hot restart peak was ~1,146 rpm.
 
+### Change 5 — Coolant enrichment first increase (2026-06-29)
+
+Before log: `009-cold-start-enrichment-v1-stall.csv`
+
+- Coolant enrichment table adjusted: 80°F 115%→130%, 100°F 110%→120%, 120°F 106%→111%.
+
+Observed result:
+
+- Engine fired and ran at 850–950 RPM for ~20 seconds then stalled.
+- AFR mean +4.30 lean (16.94 vs target 12.65). IAC pegged at 100%.
+- Enrichment improved from baseline but still far short. Battery dropped to 10.82V cranking.
+
+### Change 6 — Coolant enrichment second increase (2026-06-29)
+
+Before log: `010-cold-warmup-enrichment-v2-full-success.csv`
+
+- Coolant enrichment table adjusted: 80°F 130%→155%, 100°F 120%→145%, 120°F 111%→125%.
+
+Observed result:
+
+- Engine ran full warmup 95°F→161°F without stalling and without throttle input. First successful unassisted cold start.
+- AFR mean error +0.91 lean across entire run (open loop). At 160°F+: +0.03 lean — effectively on target.
+- IAC stepped down from 100% at cold to 25% at 160°F — warmup curve working correctly.
+- Battery dropped to 7.86V during cranking — flagged as a concern.
+
 ## Current working settings to preserve
 
-- Closed loop: off for baseline idle/startup testing.
+- Closed loop: off (enable above 140°F once battery is confirmed healthy).
+- Coolant enrichment: 80°F=155%, 100°F=145%, 120°F=125%, 140°F+=leave alone.
 - Hot IAC Startup Parked Position: 35% at 160°F+.
 - IAC Startup Hold Time: 1 sec.
 - IAC Startup Decay Time: 3 sec.
-- Hot idle screw position: keep where log 004/006 had it unless hot IAC remains consistently above ~15-20% after fully heat-soaked.
-- Target idle AFR: 13.5 is reasonable for now.
+- Hot idle screw position: unchanged from log 004/006.
+- Target idle AFR: 13.5.
 
-## Candidate next change
+## Candidate next changes
 
-Only if the next cold/warm start still sounds weak/lean below ~135°F:
+In priority order:
 
-- Add +3% to +5% coolant enrichment around 120-135°F.
-- Do not change base fuel and coolant enrichment at the same time.
-- Do not change hot IAC Startup settings unless hot restart flare returns.
+1. **Battery**: Charge fully and load test before next session. 7.86V cranking is too low and may be causing lean startup by starving injector solenoids.
+2. **Coolant enrichment fine-tune**: After battery is confirmed healthy, if 95–120°F zone is still +1 to +1.5 lean, increase 80°F→160%, 100°F→150%.
+3. **Enable closed loop above 140°F**: Hot zone is calibrated (+0.03 at 160°F). CL will self-correct the remaining open-loop lean offset in the 130–145°F zone.
+4. Do not touch IAC, idle screw, or any settings above 140°F.
