@@ -1,6 +1,16 @@
 # Next steps checklist
 
-## IMMEDIATE — Cold idle enrichment (as of 2026-06-28)
+## IMMEDIATE — as of 2026-07-03 (after first drive-around, log 011)
+
+Cold start/warmup is effectively solved: log 011 started from 89.5°F, idled unassisted, zero stalls, 13-minute drive. Cold idle AFR error halved (+1.60 lean at 80–100°F). Remaining work in priority order:
+
+1. **Hot restart no-start (log 012)** — engine would not restart hot after the drive. Analysis pending. Suspect cranking voltage sag (see #2) and/or hot-soak fueling.
+2. **Cranking voltage** — dipped to 7.53V in log 011, the worst reading yet (7.86V in log 010). Charging is healthy (13.8–14.5V running), so check battery health/CCA, starter cable, and EFI power/grounds. Voltage this low during hot cranking can brown out the ECU/fuel pump.
+3. **Enable closed loop above 160°F** — warm engine confirmed healthy across logs 008–011. Log 011 shows AFR −2.07 rich at TPS>40% with nothing correcting it. Start with conservative learn authority; verify CL Comp within ±10% at idle.
+4. **Clutch slip test** — data inconclusive (no VSS wired; 3 suggestive flare-then-sag events). On next drive: top gear at ~2,000 RPM, roll to full throttle, hold 3 s, log it. RPM jumping 800–1,000+ in the first second then sagging = slipping clutch. Consider wiring the VSS input for future logs.
+5. **Optional cold polish** — +5% coolant enrichment at the 80–90°F cells only; everything at 100°F and above is close enough to leave for closed loop.
+
+## PREVIOUS — Cold idle enrichment (as of 2026-06-28, resolved by v2 changes; verified in logs 010–011)
 
 Mechanical repairs complete (log 008, 2026-06-28). New plugs installed, exhaust leaks fixed on no-gauge side. Engine confirmed mechanically healthy when warm — zero misfire events above 160°F, AFR within +0.06 of target. Hot restart IAC working correctly.
 

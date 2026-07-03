@@ -108,6 +108,18 @@ File: `logs/raw/008-cold-warmup-new-plugs-fixed-exhaust-leaks.csv`
 - RPM roughness at cold temps is caused entirely by the lean condition — random misfire pattern, not rhythmic single-cylinder pattern.
 - Conclusion: increase coolant enrichment at 80–130°F significantly. Engine is mechanically good; this is a calibration-only fix.
 
+### 011 — First drive-around: clean cold start, warmup on target, clutch check inconclusive (2026-07-03)
+
+File: `logs/raw/011-cold-drivearound-first-drive.csv`
+
+- Best cold start on record with enrichment v2 (80°F→155%, 100°F→145%, 120°F→125%). From CTS 89.5°F: driver held ~56% throttle during cranking only, released within 1 s of fire, engine idled 850–990 RPM with zero throttle input and zero stalls — one continuous 785 s run segment over 13.3 min.
+- Cold idle AFR error roughly halved vs log 008: +1.60 lean at 80–100°F (was +3 to +4), +0.80 at 100–120°F, +0.47 at 120–140°F, within ±0.15 above 140°F. Optionally add +5% at the 80–90°F cells; otherwise cold enrichment is calibrated.
+- IAC pegged 100% below ~100°F (cannot reach cold idle target but idle is stable), stepped down to ~75% at 100–120°F, ~27% at 120–140°F, 23.8% at hot idle. Hot idle 1,089 RPM, AFR 12.96 vs 13.5 target, MAP 75.5 kPa. Warmup reached 160°F six minutes after start.
+- **Rich at load**: at TPS>40%, AFR mean 11.59 vs target 13.66 (−2.07, dips to 9.6). Entire log open loop (CL Status 0 throughout) so nothing corrects it. Injector duty peaked at 32% — plenty of headroom. Warm engine confirmed healthy → time to enable closed loop per plan.
+- **Clutch slip check inconclusive**: Speed channel is all zeros — no VSS wired to the Sniper, so direct RPM-vs-speed slip detection is impossible. Indirect evidence mildly suspicious: 3 flare-then-sag events (t≈485 s, 565 s, 600 s) where RPM surged 2,200–2,700 RPM/s for ~0.5 s at steady 36–51% TPS, then acceleration collapsed; at t≈485 s RPM fell ~700 while TPS held 46–51% and MAP steady ~82 kPa — classic slip-then-regrip signature, but low-gear acceleration in a light car plus hills can mimic it.
+  - Definitive test without VSS: top gear at ~2,000 RPM, roll to full throttle and hold 3 s. If RPM jumps 800–1,000+ in the first second then sags, the clutch is slipping.
+- **Cranking voltage worst yet: 7.53V** (7.86V in log 010, low 8s earlier). Charging healthy while running (13.8–14.5V). Battery/starter cable/ground needs attention — likely relevant to the hot-restart no-start captured in log 012.
+
 ## Temperature-bin summary
 
 |   log_id | file                                              | cts_bin_f   |   rpm_avg |   iac_avg_pct |   map_avg_kpa |   afr_avg |   target_afr_avg |   coolant_enr_avg_pct |   afterstart_enr_avg_pct |

@@ -1,7 +1,13 @@
-log_id,file,description,duration_sec,run_segments,run_start_sec,run_end_sec,total_running_sec,cts_start_f,cts_min_run_f,cts_max_run_f,rpm_peak_running,iac_min_running_pct,iac_max_running_pct,iac_end20_avg_pct,rpm_end20_avg,map_end20_avg_kpa,tps_end20_avg_pct,afr_valid_avg,target_afr_valid_avg,afr_end20_avg,target_afr_end20_avg,cl_comp_max_pct,cl_status_max,battery_min_crank_or_run_v
-1,001-initial-cold-start-dies.csv,"Initial cold/warm start attempt: starts, idles briefly, then dies; closed loop active; IAC pinned 100%; CL Comp reaches +50%.",35.928,1,12.402,31.23,18.828,89.1,89.1,89.3,1023.0,100.0,100.0,100.0,788.0,79.8,0.1,15.99,12.57,15.99,12.57,50.0,1.0,7.67
-2,002-header-gasket-cl-off-idle-screw-1turn.csv,"After tightening/replacing header gasket, closed loop disabled, idle screw turned 1 full turn clockwise. Engine stays running; IAC improved but still high; TPS needed reset.",136.998,1,31.86,136.998,105.138,95.5,95.5,102.5,1221.0,50.2,100.0,55.0,1085.0,77.5,1.91,14.82,12.8,14.19,12.85,0.0,0.0,8.55
-3,003-cl-off-full-warmup-tps-reset.csv,"Full warmup after TPS reset. Hot IAC ended at 0%, showing throttle blades too far open; recommended closing idle screw slightly.",359.388,1,4.662,359.388,354.726,118.3,118.2,212.7,2002.0,0.0,100.0,0.0,1139.0,75.8,0.39,13.55,13.36,12.86,13.5,0.0,0.0,8.83
-4,004-iac-tuning-idle-screw-adjusted-hot-flare.csv,"Idle screw adjusted to get hot IAC in range; hot restart flared to ~3,071 rpm due to IAC Startup settings.",115.722,1,6.426,115.722,109.296,185.0,184.4,209.8,3071.0,0.0,50.0,6.1,980.0,75.7,0.06,13.6,13.52,13.2,13.5,0.0,0.0,8.15
-5,005-hot-start-iac-35pct-short-cool-log.csv,"After IAC Startup changes: hot 160°F+ parked row moved to 35%, hold 1 sec, decay 3 sec. Test was only ~125°F, so 160°F row likely inactive; IAC 100%, AFR lean-looking.",26.448,1,8.17,26.448,18.278,124.6,124.6,124.8,1144.0,100.0,100.0,100.0,1021.0,77.2,0.05,18.72,13.25,18.72,13.25,0.0,0.0,7.88
-6,006-full-warmup-hot-restart-after-iac-startup.csv,Full warmup plus hot restart after IAC Startup changes. Hot restart no longer flares; warmup AFR lean-looking only below ~135-140°F.,429.478,2,12.03,429.478,410.588,124.3,124.3,201.3,1146.0,16.8,100.0,27.7,1056.0,75.2,0.15,14.38,13.41,13.31,13.5,0.0,0.0,8.27
+log_id,file,duration_sec,run_segments,cts_min_run_f,cts_max_run_f,rpm_peak_running,iac_end20_avg_pct,rpm_end20_avg,afr_valid_avg,target_afr_valid_avg,cl_comp_max_pct,battery_min_v
+1,001-initial-cold-start-dies.csv,35.928,9,89.1,89.3,1023.0,100.0,788.0,15.99,12.57,50.0,7.67
+2,002-header-gasket-cl-off-idle-screw-1turn.csv,136.998,1,95.5,102.5,1221.0,55.0,1085.0,14.82,12.8,0.0,8.55
+3,003-cl-off-full-warmup-tps-reset.csv,359.388,1,118.2,212.7,2002.0,0.0,1139.0,13.55,13.36,0.0,8.83
+4,004-iac-tuning-idle-screw-adjusted-hot-flare.csv,115.722,1,184.4,209.8,3071.0,6.1,980.0,13.6,13.52,0.0,8.15
+5,005-hot-start-iac-35pct-short-cool-log.csv,26.448,1,124.6,124.8,1144.0,100.0,1021.0,18.72,13.25,0.0,7.88
+6,006-full-warmup-hot-restart-after-iac-startup.csv,429.478,2,124.3,201.3,1146.0,27.7,1056.0,14.38,13.41,0.0,8.27
+7,007-full-warmup-vacuum-bleed-coolant-dead-cylinder.csv,429.478,2,124.3,201.3,1146.0,27.7,1056.0,14.38,13.41,0.0,8.27
+8,008-cold-warmup-new-plugs-fixed-exhaust-leaks.csv,826.178,6,90.4,189.0,3555.0,22.3,1249.0,14.42,13.3,0.0,7.9
+9,009-cold-start-enrichment-v1-stall.csv,47.538,3,91.3,92.5,981.0,100.0,832.0,16.4,12.63,0.0,9.23
+10,010-cold-warmup-enrichment-v2-full-success.csv,493.774,1,95.4,161.1,1132.0,26.6,1001.0,14.13,13.22,0.0,7.86
+11,011-cold-drivearound-first-drive.csv,796.73,1,89.5,191.7,5492.0,21.0,1203.0,13.16,13.45,0.0,7.53
+12,012-hot-restart-no-start.csv,37.79,0,,,,,,,,,8.57
