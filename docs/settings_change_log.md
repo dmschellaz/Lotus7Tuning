@@ -85,9 +85,19 @@ Observed result:
 - IAC stepped down from 100% at cold to 25% at 160°F — warmup curve working correctly.
 - Battery dropped to 7.86V during cranking — flagged as a concern.
 
+Tune snapshot: `Tunes/062926_R2_CoolantTempEnrichment.sniper` (Sniper software 2.0 Build 15, saved 2026-06-29 at 17:46:55). The matching `.info.txt` metadata file is retained beside it.
+
+### Runtime state observed in log 013
+
+These are observations from the datalog, not confirmed changes stored in the June 29 tune snapshot:
+
+- Closed loop was enabled without a minimum coolant-temperature gate and became active at 96°F.
+- Closed-loop compensation reached its +50% ceiling during cold idle.
+- Learn became active once coolant enrichment reached 100% at approximately 160°F.
+- The existing Learn Table contains large, old modifiers and must not be transferred to the base fuel table from this drive.
+
 ## Current working settings to preserve
 
-- Closed loop: off (enable above 140°F once battery is confirmed healthy).
 - Coolant enrichment: 80°F=155%, 100°F=145%, 120°F=125%, 140°F+=leave alone.
 - Hot IAC Startup Parked Position: 35% at 160°F+.
 - IAC Startup Hold Time: 1 sec.
@@ -95,11 +105,12 @@ Observed result:
 - Hot idle screw position: unchanged from log 004/006.
 - Target idle AFR: 13.5.
 
-## Candidate next changes
+## Candidate next changes after log 013
 
 In priority order:
 
-1. **Battery**: Charge fully and load test before next session. 7.86V cranking is too low and may be causing lean startup by starving injector solenoids.
-2. **Coolant enrichment fine-tune**: After battery is confirmed healthy, if 95–120°F zone is still +1 to +1.5 lean, increase 80°F→160%, 100°F→150%.
-3. **Enable closed loop above 140°F**: Hot zone is calibrated (+0.03 at 160°F). CL will self-correct the remaining open-loop lean offset in the 130–145°F zone.
-4. Do not touch IAC, idle screw, or any settings above 140°F.
+1. Save a fresh pre-test tune and preserve the existing Learn Table; do not transfer it into Base Fuel.
+2. Keep Closed Loop enabled, enable its minimum CTS gate at 160°F, and use a conservative ±10% Closed Loop Limit for the validation drive. Leave Closed Loop Speed unchanged.
+3. Disable Learn for the validation drive so the existing table is frozen. Do not clear it yet because removing the applied modifiers could create a large immediate fuel change.
+4. Leave coolant enrichment, IAC settings, idle screw, base fuel, acceleration enrichment, and target AFR unchanged for this test.
+5. Review the high-load Target AFR table before attempting full throttle or leaning high-load fuel cells. The recorded target of roughly 13.5–14.0 AFR at 80–86 kPa and 3,500–5,200 RPM should be an intentional choice, not accepted blindly.
