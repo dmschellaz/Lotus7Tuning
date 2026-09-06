@@ -4,16 +4,21 @@ These notes summarize the logs captured during the Sniper idle/startup tuning se
 
 ## Summary metrics
 
-|   log_id | file                                              |   duration_sec |   run_segments |   cts_min_run_f |   cts_max_run_f |   rpm_peak_running |   iac_end20_avg_pct |   rpm_end20_avg |   afr_end20_avg |   target_afr_end20_avg |   cl_comp_max_pct |   cl_status_max |
-|---------:|:--------------------------------------------------|---------------:|---------------:|----------------:|----------------:|-------------------:|--------------------:|----------------:|----------------:|-----------------------:|------------------:|----------------:|
-|        1 | 001-initial-cold-start-dies.csv                   |         35.928 |              1 |            89.1 |            89.3 |               1023 |               100   |             788 |           15.99 |                  12.57 |                50 |               1 |
-|        2 | 002-header-gasket-cl-off-idle-screw-1turn.csv     |        136.998 |              1 |            95.5 |           102.5 |               1221 |                55   |            1085 |           14.19 |                  12.85 |                 0 |               0 |
-|        3 | 003-cl-off-full-warmup-tps-reset.csv              |        359.388 |              1 |           118.2 |           212.7 |               2002 |                 0   |            1139 |           12.86 |                  13.5  |                 0 |               0 |
-|        4 | 004-iac-tuning-idle-screw-adjusted-hot-flare.csv  |        115.722 |              1 |           184.4 |           209.8 |               3071 |                 6.1 |             980 |           13.2  |                  13.5  |                 0 |               0 |
-|        5 | 005-hot-start-iac-35pct-short-cool-log.csv        |         26.448 |              1 |           124.6 |           124.8 |               1144 |               100   |            1021 |           18.72 |                  13.25 |                 0 |               0 |
-|        6 | 006-full-warmup-hot-restart-after-iac-startup.csv |        429.478 |              2 |           124.3 |           201.3 |               1146 |                27.7 |            1056 |           13.31 |                  13.5  |                 0 |               0 |
-|        7 | 007-full-warmup-vacuum-bleed-coolant-dead-cylinder.csv |        429.5 |              2 |           124.3 |           201.3 |               1093 |                19.5 |            1010 |           13.33 |                  13.5  |                 0 |               0 |
-|        8 | 008-cold-warmup-new-plugs-fixed-exhaust-leaks.csv      |        826.2 |              3 |            90.3 |           189.0 |               3555 |                21.0 |            1001 |           13.07 |                  13.5  |                 0 |               0 |
+| log | file | duration (s) | run segments | CTS run (°F) | peak RPM | end-20s IAC | end-20s RPM | valid AFR | target AFR | max CL comp | min battery |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 001-initial-cold-start-dies.csv | 35.928 | 9 | 89.1–89.3 | 1,023 | 100.0 | 788 | 15.99 | 12.57 | 50.0 | 7.67 |
+| 2 | 002-header-gasket-cl-off-idle-screw-1turn.csv | 136.998 | 1 | 95.5–102.5 | 1,221 | 55.0 | 1,085 | 14.82 | 12.80 | 0.0 | 8.55 |
+| 3 | 003-cl-off-full-warmup-tps-reset.csv | 359.388 | 1 | 118.2–212.7 | 2,002 | 0.0 | 1,139 | 13.55 | 13.36 | 0.0 | 8.83 |
+| 4 | 004-iac-tuning-idle-screw-adjusted-hot-flare.csv | 115.722 | 1 | 184.4–209.8 | 3,071 | 6.1 | 980 | 13.60 | 13.52 | 0.0 | 8.15 |
+| 5 | 005-hot-start-iac-35pct-short-cool-log.csv | 26.448 | 1 | 124.6–124.8 | 1,144 | 100.0 | 1,021 | 18.72 | 13.25 | 0.0 | 7.88 |
+| 6 | 006-full-warmup-hot-restart-after-iac-startup.csv | 429.478 | 2 | 124.3–201.3 | 1,146 | 27.7 | 1,056 | 14.38 | 13.41 | 0.0 | 8.27 |
+| 7 | 007-full-warmup-vacuum-bleed-coolant-dead-cylinder.csv | 429.478 | 2 | 124.3–201.3 | 1,146 | 27.7 | 1,056 | 14.38 | 13.41 | 0.0 | 8.27 |
+| 8 | 008-cold-warmup-new-plugs-fixed-exhaust-leaks.csv | 826.178 | 6 | 90.4–189.0 | 3,555 | 22.3 | 1,249 | 14.42 | 13.30 | 0.0 | 7.90 |
+| 9 | 009-cold-start-enrichment-v1-stall.csv | 47.538 | 3 | 91.3–92.5 | 981 | 100.0 | 832 | 16.40 | 12.63 | 0.0 | 9.23 |
+| 10 | 010-cold-warmup-enrichment-v2-full-success.csv | 493.774 | 1 | 95.4–161.1 | 1,132 | 26.6 | 1,001 | 14.13 | 13.22 | 0.0 | 7.86 |
+| 11 | 011-cold-drivearound-first-drive.csv | 796.730 | 1 | 89.5–191.7 | 5,492 | 21.0 | 1,203 | 13.16 | 13.45 | 0.0 | 7.53 |
+| 12 | 012-hot-restart-no-start.csv | 37.790 | 0 | — | — | — | — | — | — | — | 8.57 |
+| 13 | 013-cold-drive-closed-loop-learning.csv | 680.942 | 1 | 95.9–193.1 | 5,179 | 16.9 | 1,061 | 13.54 | 13.49 | 50.0 | 7.95 |
 
 ## Per-log observations
 
@@ -119,6 +124,30 @@ File: `logs/raw/011-cold-drivearound-first-drive.csv`
 - **Clutch slip check inconclusive**: Speed channel is all zeros — no VSS wired to the Sniper, so direct RPM-vs-speed slip detection is impossible. Indirect evidence mildly suspicious: 3 flare-then-sag events (t≈485 s, 565 s, 600 s) where RPM surged 2,200–2,700 RPM/s for ~0.5 s at steady 36–51% TPS, then acceleration collapsed; at t≈485 s RPM fell ~700 while TPS held 46–51% and MAP steady ~82 kPa — classic slip-then-regrip signature, but low-gear acceleration in a light car plus hills can mimic it.
   - Definitive test without VSS: top gear at ~2,000 RPM, roll to full throttle and hold 3 s. If RPM jumps 800–1,000+ in the first second then sags, the clutch is slipping.
 - **Cranking voltage worst yet: 7.53V** (7.86V in log 010, low 8s earlier). Charging healthy while running (13.8–14.5V). Battery/starter cable/ground needs attention — likely relevant to the hot-restart no-start captured in log 012.
+
+### 012 — Hot-restart no-start (2026-07-03)
+
+File: `logs/raw/012-hot-restart-no-start.csv`
+
+- No sample exceeded the 400 RPM running threshold; the engine never caught.
+- Battery recorded an 8.57V minimum at starter engagement. During samples with 50–400 RPM registered, voltage remained at or above 10.41V.
+- Because the engine never ran, AFR and closed-loop channels cannot diagnose the cause. The file does not independently separate a brief electrical transient from hot-soak fueling or another restart issue.
+- Conclusion: retain the battery/cable checks and capture dedicated 30-second and 5-minute heat-soak restart attempts after the next controlled drive.
+
+### 013 — Cold drive with closed loop and learning active
+
+File: `logs/raw/013-cold-drive-closed-loop-learning.csv`
+
+- Clean start from 96°F after approximately 3 seconds of cranking with TPS near zero. The engine then ran continuously for 664.8 seconds and reached 193°F without overheating.
+- Battery recorded one 7.95V sample at starter engagement, but sustained cranking voltage was much healthier at 10.76–11.22V. Running voltage averaged 14.29V. The electrical concern is improved but is not cleared, especially because no hot restart was attempted.
+- Closed loop activated at t=18.15 seconds, only about 2 seconds after the engine fired and while CTS was still 96°F. It was active for 78% of the run and saturated at approximately +50% for 93 seconds during cold idle. This masked independent evaluation of the R2 coolant-enrichment curve.
+- Learn remained inactive until approximately 160°F, then was active for 39% of the run. Visited cells showed `Current Learn` values from −16% to +37%. The table was already populated in earlier logs, so do not transfer this learned data into the base fuel table.
+- Closed-loop cruise fueling was excellent: TPS 2–10% averaged 13.59 AFR against a 13.58 target. TPS 10–25% averaged 14.18 against 13.74 when closed loop was active.
+- TPS>40% averaged 12.42 AFR against a 13.67 target, an improvement from approximately 11.62 in log 011 but still 1.25 AFR rich. The pulls were too short to separate acceleration enrichment from base-VE error. Closed loop removed as much as 20–27% fuel during some pulls, producing transient swings; do not edit the base table from this drive.
+- Injector duty remained below 36%, leaving ample capacity.
+- No sustained pull showed a clear flare-then-sag clutch-slip signature. Several pulls climbed smoothly past 4,000–5,000 RPM, weakening the suspicion from log 011. The conclusion remains non-definitive because Speed is still zero and a controlled top-gear test from approximately 2,000 RPM was not captured.
+- End-of-log hot idle averaged approximately 1,060 RPM, 17% IAC, 74.7 kPa MAP, and 13.46 AFR against a 13.50 target. Leave the idle screw unchanged until fuel-control behavior is stabilized.
+- No engine shutdown or restart occurred, so the hot-restart no-start remains unresolved.
 
 ## Temperature-bin summary
 

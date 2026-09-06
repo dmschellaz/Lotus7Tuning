@@ -27,11 +27,11 @@ docs/                    Tuning notes, observations, settings history, next step
 scripts/                 Helper script to regenerate summary CSVs
 ```
 
-## Current status — 2026-06-29
+## Current status — after log 013
 
-**Cold start is working. Fine-tuning and closed loop enablement are next.**
+**Cold start and normal cruise are working. Closed-loop gating, stale learn data, hot restart, and controlled load testing are next.**
 
-First successful unassisted cold start confirmed in log 010 (2026-06-29): engine ran from 95°F to 161°F without stalling and without any throttle input. AFR mean error +0.91 lean open-loop; +0.03 lean at 160°F+. The engine is in good shape. Battery voltage dropped to 7.86V during cranking and needs attention before the next session.
+Log 013 started cleanly from 96°F with no throttle and ran continuously to 193°F. Closed-loop cruise fueling was essentially on target, but closed loop also operated during cold warmup and remained near +50% correction for about 93 seconds. Learning activated above 160°F against a previously populated Learn Table. Freeze learning and gate closed loop at 160°F for the next controlled validation drive.
 
 ## What has been solved
 
@@ -40,20 +40,22 @@ First successful unassisted cold start confirmed in log 010 (2026-06-29): engine
 | Engine wouldn't stay running | Fixed — header work + idle screw + TPS reset |
 | Hot restart RPM flare to 3,071 rpm | Fixed — IAC startup position set to 35%, hold 1s, decay 3s |
 | Rapid overheating | Fixed — coolant system vacuum-bled 2026-06-27 |
-| Hot restart behavior | Confirmed good — fires immediately, stable RPM, AFR on target within 5s |
+| Hot restart RPM flare | Fixed — fires without the former 3,071 rpm flare when it starts |
 | IAC warmup curve | Working — steps down correctly from 100% cold to ~25% at 160°F |
 | Dead cylinder (passenger side) | Fixed 2026-06-28 — new plugs + exhaust flange repair, zero misfire warm |
 | Cold idle stall (80–130°F) | Fixed 2026-06-29 — coolant enrichment increased to 155%/145%/125% at 80/100/120°F |
 
 ## Current known issues
 
-1. **Battery voltage low during cranking** — dropped to 7.86V in log 010. Check battery health, charge fully, and load test before next session. Low cranking voltage starves injector solenoids and may be contributing to the remaining cold lean condition.
-2. **Cold zone still slightly lean (95–120°F)** — AFR runs +1.0 to +1.8 lean in this range open-loop. A small additional enrichment increase (80°F→160%, 100°F→150%) may help after battery is confirmed healthy.
-3. **Closed loop still off** — hot zone is calibrated (+0.03 at 160°F+). Enable CL above 140°F once battery is confirmed good; it will self-correct the remaining lean offset in the 130–145°F zone.
+1. **Hot restart no-start** — log 012 captured a failed hot restart; log 013 did not retest it.
+2. **Closed loop active too early** — in log 013 it activated at 96°F and saturated near +50% during cold warmup.
+3. **Stale/large Learn Table modifiers** — observed values span approximately −16% to +37%; do not transfer them to Base Fuel.
+4. **High-load transient fueling** — TPS>40% averaged 12.42 AFR against a 13.67 target, but the pulls were too short to distinguish acceleration enrichment from base VE.
+5. **Cranking voltage** — log 013 recorded one 7.95V starter-engagement sample, although sustained cranking improved to 10.76–11.22V.
 
 ## Immediate next steps
 
-1. **Fix the battery first** — charge fully and load test. Do not tune against a weak battery.
-2. **Enable closed loop above 140°F** — the hot zone is dialed in; CL will handle residual lean offset without further table changes.
-3. **Optional enrichment fine-tune** — if 95–120°F zone still runs lean after CL is on, increase 80°F→160%, 100°F→150%.
-4. Do not touch IAC, idle screw, or any coolant enrichment cells above 140°F — those are working correctly.
+1. Save a fresh tune and preserve the existing Learn Table without transferring it.
+2. Enable the Closed Loop minimum CTS gate at 160°F; set the Closed Loop Limit to ±10% for validation and disable Learn.
+3. Run the structured cold-start, cruise, moderate-load, and hot-restart procedure in `docs/next_steps.md`.
+4. Leave coolant enrichment, IAC, idle screw, base fuel, acceleration enrichment, and target AFR unchanged during this test.
